@@ -1,7 +1,7 @@
 # peterparker
 
 
-Instalar/Utilizar versão 1.9.3 do Ruby:
+Criado banco remoto para uso:
 
     Host: sql5.freesqldatabase.com
     Database name: sql5108938
