@@ -19,17 +19,23 @@ public class CarController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String parametro = request.getParameter("logica");
-		System.out.println(parametro);
-		String action = "com.peterparker.business_rule.car." + parametro;
-		if (action != "" || !action.isEmpty()) {
-			try {
-				Class<?> classe = Class.forName(action);
-				Logic logica = (Logic) classe.newInstance();
-				String pagina = logica.executa(request, response);
-				request.getRequestDispatcher("/WEB-INF/Car/" + pagina).forward(request, response);
-			} catch (Exception e) {
-				throw new ServletException("A lógica de negócios causou uma exceção", e);
+		String parametro = request.getParameter("action") != null ? request.getParameter("action") : "";
+
+		// temp
+		int statico = request.getParameter("static") != null ? Integer.parseInt(request.getParameter("static")) : 0;
+		if (parametro != "" || !parametro.isEmpty()) {
+			if (statico == 1) {
+				request.getRequestDispatcher("/WEB-INF/Car/" + parametro + ".jsp").forward(request, response);
+			} else {
+				String action = "com.peterparker.business_rule.car." + parametro;
+				try {
+					Class<?> classe = Class.forName(action);
+					Logic logica = (Logic) classe.newInstance();
+					String pagina = logica.executa(request, response);
+					request.getRequestDispatcher("/WEB-INF/Car/" + pagina).forward(request, response);
+				} catch (Exception e) {
+					throw new ServletException("A lógica de negócios causou uma exceção", e);
+				}
 			}
 		} else {
 			try {

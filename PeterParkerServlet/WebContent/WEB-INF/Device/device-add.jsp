@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-CARRO ADICIONADO
+<form action="device?action=AddDevice" method="post">
+  <label>Localização</label><br>
+  <input type="text" id="address" name="address"/><br>
+  <label>Desrição</label><br>
+  <input type="text" id="description" name="description"/><br>
+  <input type="submit" value="Cadastrar">
+</form>
 </body>
 </html>

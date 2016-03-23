@@ -1,8 +1,8 @@
 package com.peterparker.models;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class TicketDispositivos {
+public class TicketDevice {
 
 	private Long id;
 

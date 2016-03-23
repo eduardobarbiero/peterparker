@@ -7,8 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="ticket">Ticket</a><br>
-<a href="car">Carro</a><br>
-<a href="device">Device</a><br>
+<form action="car?action=AddCar" method="post">
+  <label>Placa</label><br>
+  <input type="text" id="board" name="board"/><br>
+  <label>Cor</label><br>
+  <input type="text" id="color" name="color"/><br>
+  <input type="submit" value="Cadastrar">
+</form>
 </body>
 </html>

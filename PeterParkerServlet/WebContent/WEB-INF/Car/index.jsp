@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-aqui é o index dos carros
+aqui é o index dos carros<br>
+<a href="car?action=car-add&static=1">Add Carro</a>
 </body>
 </html>

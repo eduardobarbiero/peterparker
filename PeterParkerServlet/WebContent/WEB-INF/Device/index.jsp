@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-aqui é o device
+aqui é o device<br>
+<a href="device?action=device-add&static=1">Add Device</a>
 </body>
 </html>

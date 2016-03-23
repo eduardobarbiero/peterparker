@@ -8,9 +8,7 @@ public class Car {
 
 	private String board;
 
-	private String color;
-
-	private Set<Ticket> tickets;
+	private String color;	
 
 	public Long getId() {
 		return this.id;
@@ -32,15 +30,7 @@ public class Car {
 		return this.color;
 	}
 
-	public void setCor(String color) {
+	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public Set<Ticket> getTickets() {
-		return this.tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
 	}
 }
