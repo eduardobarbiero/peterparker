@@ -1,10 +1,17 @@
-package org.catolicasc.peterparker.model;
+package org.catolicasc.peterparker.modelo;
 
 public class Device {
 
 	private Long id;
 	private String address;
 	private String description;
+
+	public Device(Long id) {
+		this.id = id;
+	}
+
+	public Device() {
+	}
 
 	public Long getId() {
 		return this.id;
