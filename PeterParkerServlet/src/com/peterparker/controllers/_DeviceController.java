@@ -2,7 +2,6 @@ package com.peterparker.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.peterparker.business_rule.Logic;
-import com.peterparker.business_rule.car.ListCar;
-import com.peterparker.models.Car;
 
 @SuppressWarnings("serial")
-@WebServlet("/car")
-public class CarController extends HttpServlet {
+@WebServlet("/device/_")
+public class _DeviceController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -25,25 +22,24 @@ public class CarController extends HttpServlet {
 		int statico = request.getParameter("static") != null ? Integer.parseInt(request.getParameter("static")) : 0;
 		if (parametro != "" || !parametro.isEmpty()) {
 			if (statico == 1) {
-				request.getRequestDispatcher("/WEB-INF/Car/" + parametro + ".jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/Device/" + parametro + ".jsp").forward(request, response);
 			} else {
-				String action = "com.peterparker.business_rule.car." + parametro;
+				String action = "com.peterparker.business_rule.device." + parametro;
 				try {
 					Class<?> classe = Class.forName(action);
 					Logic logica = (Logic) classe.newInstance();
 					String pagina = logica.executa(request, response);
-					request.getRequestDispatcher("/WEB-INF/Car/" + pagina).forward(request, response);
+					request.getRequestDispatcher("/WEB-INF/Device/" + pagina).forward(request, response);
 				} catch (Exception e) {
 					throw new ServletException("A lógica de negócios causou uma exceção", e);
 				}
 			}
 		} else {
 			try {
-				request.getRequestDispatcher("/WEB-INF/Car/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/Device/index.jsp").forward(request, response);
 			} catch (Exception e) {
 				throw new ServletException("A lógica de negócios causou uma exceção", e);
 			}
 		}
-
 	}
 }
