@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="ui main text container" style="padding-top: 80px">
-			<form method="POST" action="" class="ui form segment">
+			<form method="POST" action="/PeterParker/car/create" class="ui form segment">
 				<h3 class="ui dividing header">
 					Informações do carro
 				</h4>

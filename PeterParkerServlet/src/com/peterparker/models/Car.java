@@ -8,7 +8,16 @@ public class Car {
 
 	private String board;
 
-	private String color;	
+	private String color;
+
+	public Car(Long id, String board, String color) {
+		this.id = id;
+		this.board = board;
+		this.color = color;
+	}
+
+	public Car() {
+	}
 
 	public Long getId() {
 		return this.id;

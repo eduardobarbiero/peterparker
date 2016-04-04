@@ -1,7 +1,6 @@
 package com.peterparker.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,25 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.peterparker.business_rule.Logic;
-import com.peterparker.dao.DeviceDAO;
-import com.peterparker.models.Device;
 
 
 @SuppressWarnings("serial")
-@WebServlet("/device")
-public class ListDevicesController extends HttpServlet {
+@WebServlet("/car/create")
+public class CreateCarController extends HttpServlet {
 	
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = "com.peterparker.business_rule.device.ListDevice";		
+		String action = "com.peterparker.business_rule.car.AddCar";		
 		try {
 			Class<?> classe = Class.forName(action);
 			Logic logica = (Logic) classe.newInstance();
 			String pagina = logica.executa(request, response);
-		} catch(Exception e){
-			System.out.println("Erro ao redirecionar: " + e.toString());
+			response.sendRedirect("/PeterParker/car");			
+		} catch (Exception e) {
+			response.sendRedirect("/PeterParker/car");
+			throw new ServletException("A lógica de negócios causou uma exceção", e);
 		}
-		
 	}
 }

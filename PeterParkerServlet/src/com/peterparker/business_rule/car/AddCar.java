@@ -12,8 +12,8 @@ public class AddCar implements Logic {
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Car car = new Car();
 		CarDAO dao = new CarDAO();
-		car.setBoard(request.getParameter("board"));
-		car.setColor(request.getParameter("color"));
+		car.setBoard(request.getParameter("placa"));
+		car.setColor(request.getParameter("cor"));
 		dao.add(car);
 		System.out.println("Cadastrando Carro... ");
 		return "index.jsp";

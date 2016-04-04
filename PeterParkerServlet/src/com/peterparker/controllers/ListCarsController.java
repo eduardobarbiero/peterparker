@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.peterparker.business_rule.Logic;
+
 @SuppressWarnings("serial")
 @WebServlet("/car")
 public class ListCarsController extends HttpServlet {
@@ -16,7 +18,13 @@ public class ListCarsController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Car/list-cars.jsp");
-		rd.forward(request, response);
+		String action = "com.peterparker.business_rule.car.ListCar";		
+		try {
+			Class<?> classe = Class.forName(action);
+			Logic logica = (Logic) classe.newInstance();
+			String pagina = logica.executa(request, response);
+		} catch(Exception e){
+			System.out.println("Erro ao redirecionar: " + e.toString());
+		}		
 	}
 }
