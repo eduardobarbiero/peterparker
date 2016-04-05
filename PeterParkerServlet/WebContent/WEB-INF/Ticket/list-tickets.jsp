@@ -28,10 +28,8 @@
 				<tr>
 					<th>Identificação</th>
 					<th>Identificação do carro</th>
-					<th>Hora de entrada</th>
-					<th>Hora de saída</th>
-					<th>Dispositivo de entrada</th>
-					<th>Dispositivo de saída</th>
+					<th>Hora de entrada</th>					
+					<th>Dispositivo de entrada</th>					
 					<th>Marcar saída</th>
 				</tr>
 			</thead>
@@ -41,11 +39,8 @@
 						<td>${ticket.id}</td>
 						<td>${ticket.car.board}</td>
 						<td><fmt:formatDate value="${ticket.horaEntrada.time}"
-								pattern="dd/MM/yyyy HH:mm:ss" /></td>
-						<td><fmt:formatDate value="${ticket.horaSaida.time}"
-								pattern="dd/MM/yyyy HH:mm:ss" /></td>
-						<td>${ticket.dispositivoEntrada.description}</td>
-						<td>${ticket.dispositivoSaida.description}</td>
+								pattern="dd/MM/yyyy HH:mm:ss" /></td>						
+						<td>${ticket.dispositivoEntrada.description}</td>						
 						<td>
 							<div class="field">
 								<form method="POST" action="/PeterParker/ticket/update"

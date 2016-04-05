@@ -18,8 +18,8 @@ public class TicketDAO {
 	private static final String INSERT_TICKET = "INSERT INTO TICKET (carro_id, hora_entrada, dispositivo_entrada) Values (?,?,?)";
 	private static final String GET_ID_BY_BOARD = "SELECT t.ticket_id FROM TICKET t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.placa = '";
 	private static final String GET_CAR_BY_BOARD = "SELECT * FROM TICKET t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.placa = '";
-	private static final String GET_LIST_TICKET = "SELECT * FROM TICKET t LEFT JOIN Carro c ON t.carro_id=c.carro_id LEFT JOIN Dispositivo d ON (d.dispositivo_id= t.dispositivo_entrada) WHERE t.hora_saida is null";
-	private static final String GET_LIST_TICKET_LEFT = "SELECT * FROM TICKET t LEFT JOIN Carro c ON t.carro_id=c.carro_id LEFT JOIN Dispositivo d ON (d.dispositivo_id = t.dispositivo_saida) WHERE t.hora_saida is not null";
+	private static final String GET_LIST_TICKET = "SELECT * FROM TICKET t LEFT JOIN Carro c ON t.carro_id=c.carro_id LEFT JOIN Dispositivo d ON (d.dispositivo_id= t.dispositivo_entrada) WHERE t.hora_saida is null order by t.hora_entrada desc";
+	private static final String GET_LIST_TICKET_LEFT = "SELECT *, (SELECT dis.descricao from Dispositivo dis where dis.dispositivo_id = t.dispositivo_entrada) dispositivo_entrada_desc FROM TICKET t LEFT JOIN Carro c ON t.carro_id=c.carro_id LEFT JOIN Dispositivo d ON (d.dispositivo_id = t.dispositivo_saida) WHERE t.hora_saida is not null order by t.hora_saida desc";
 	private static final String REMOVE_TICKET = "DELETE FROM  TICKETS WHERE ticket_id=?";
 	private static final String UPDATE_TICKET = "UPDATE TICKET SET hora_saida=?, dispositivo_saida=? where ticket_id=?";
 
@@ -57,7 +57,7 @@ public class TicketDAO {
 			while (rs.next()) {				
 				Ticket ticket = new Ticket();
 				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("descricao"));
-				Device device_saida = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("descricao"));
+				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"), rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
 				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
@@ -90,14 +90,16 @@ public class TicketDAO {
 			ResultSet rs = this.stmt.executeQuery();
 
 			while (rs.next()) {				
-				Ticket ticket = new Ticket();
-				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("descricao"));
-				Device device_saida = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("descricao"));
+				Ticket ticket = new Ticket();				
+				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("dispositivo_entrada_desc"));
+				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"), rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
 				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
 				ticket.setId(rs.getLong("ticket_id"));
 				ticket.setCar(car);
+				System.out.println(device.getDescription());
+				System.out.println(device_saida.getDescription());
 				ticket.setDispositivoEntrada(device);
 				ticket.setDispositivoSaida(device_saida);
 				ticket.setHoraEntrada(cal);
