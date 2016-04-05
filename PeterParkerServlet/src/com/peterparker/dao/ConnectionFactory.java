@@ -8,7 +8,7 @@ public class ConnectionFactory {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/peter_parker";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "root";
+	private static final String PASSWORD = "";
 
 	public Connection getConnection() throws SQLException {
 		System.out.println("conectando ...");
