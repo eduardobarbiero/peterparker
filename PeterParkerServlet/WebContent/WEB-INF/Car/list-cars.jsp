@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,8 +37,12 @@
 							<td>${car.id}</td>
 							<td>${car.board}</td>
 							<td>${car.color}</td>
-							<td><a> <i class="trash outline icon"></i>
-							</a></td>
+							<td>
+								<form method="POST" action="/PeterParker/car/remove">
+									<input type="hidden" name="id" value="${car.id}" /> <input type="submit"
+										class="ui button red" value="Remover" />
+								</form>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -47,9 +51,7 @@
 				<tbody>
 					<tr>
 						<td colspan="4">
-							<div class="ui ribbon label">
-								Nenhum carro foi cadastrado
-							</div>
+							<div class="ui ribbon label">Nenhum carro foi cadastrado</div>
 						</td>
 					</tr>
 				</tbody>

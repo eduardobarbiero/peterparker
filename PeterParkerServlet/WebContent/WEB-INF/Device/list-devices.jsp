@@ -37,8 +37,12 @@
 							<td>${device.id}</td>
 							<td>${device.address}</td>
 							<td>${device.description}</td>
-							<td><a> <i class="trash outline icon"></i>
-							</a></td>
+							<td>
+								<form method="POST" action="/PeterParker/device/remove">
+									<input type="hidden" name="id" value="${device.id}" />
+									<input type="submit" value="Remover" class="ui button red" />
+								</form>
+							</td>
 						</tr>					
 					</c:forEach>				
 				</tbody>

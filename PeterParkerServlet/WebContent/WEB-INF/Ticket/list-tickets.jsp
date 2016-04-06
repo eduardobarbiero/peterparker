@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,8 +29,8 @@
 				<tr>
 					<th>Identificação</th>
 					<th>Identificação do carro</th>
-					<th>Hora de entrada</th>					
-					<th>Dispositivo de entrada</th>					
+					<th>Hora de entrada</th>
+					<th>Dispositivo de entrada</th>
 					<th>Marcar saída</th>
 				</tr>
 			</thead>
@@ -41,33 +41,34 @@
 							<td>${ticket.id}</td>
 							<td>${ticket.car.board}</td>
 							<td><fmt:formatDate value="${ticket.horaEntrada.time}"
-									pattern="dd/MM/yyyy HH:mm:ss" /></td>						
-							<td>${ticket.dispositivoEntrada.description}</td>						
+									pattern="dd/MM/yyyy HH:mm:ss" /></td>
+							<td>${ticket.dispositivoEntrada.description}</td>
 							<td>
 								<div class="field">
 									<form method="POST" action="/PeterParker/ticket/update"
 										class="ui form">
-										<input type="hidden" id="ticket_id" name="ticket_id" value="${ticket.id}"/>
-										<select type="text" name="dispositivo_saida">
+										<input type="hidden" id="ticket_id" name="ticket_id"
+											value="${ticket.id}" /> <select type="text"
+											name="dispositivo_saida">
 											<c:forEach items="${devices}" var="device">
 												<option value="${device.id}">${device.description}</option>
 											</c:forEach>
-										</select> <input type="submit" value="Saiu" class="ui button primary">
+										</select> <input type="submit" value="Saiu" class="ui button primary"
+											style="margin: 10px 0">
 									</form>
 								</div>
 							</td>
 						</tr>
 					</c:forEach>
-	
+
 				</tbody>
 			</c:if>
 			<c:if test="${fn:length(tickets) == 0}">
 				<tbody>
 					<tr>
 						<td colspan="5">
-							<div class="ui ribbon label">
-								Nenhum ticket de entrada foi cadastrado
-							</div>
+							<div class="ui ribbon label">Nenhum ticket de entrada foi
+								cadastrado</div>
 						</td>
 					</tr>
 				</tbody>
@@ -85,7 +86,8 @@
 		</table>
 	</div>
 
-	<div class="ui main text container" style="padding-top: 80px; padding-bottom: 80px;">
+	<div class="ui main text container"
+		style="padding-top: 80px; padding-bottom: 80px;">
 		<h1>Saida</h1>
 		<table class="ui blue celled table">
 			<thead>
@@ -98,33 +100,32 @@
 					<th>Dispositivo de saída</th>
 				</tr>
 			</thead>
-				<c:if test="${fn:length(tickets_saida) > 0}">
-					<tbody>
-						<c:forEach items="${tickets_saida}" var="ticket">
-							<tr>
-								<td>${ticket.id}</td>
-								<td>${ticket.car.board}</td>
-								<td><fmt:formatDate value="${ticket.horaEntrada.time}"
-										pattern="dd/MM/yyyy HH:mm:ss" /></td>
-								<td><fmt:formatDate value="${ticket.horaSaida.time}"
-										pattern="dd/MM/yyyy HH:mm:ss" /></td>
-								<td>${ticket.dispositivoEntrada.description}</td>
-								<td>${ticket.dispositivoSaida.description}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</c:if>
-				<c:if test="${fn:length(tickets_saida) == 0}">
-					<tbody>
+			<c:if test="${fn:length(tickets_saida) > 0}">
+				<tbody>
+					<c:forEach items="${tickets_saida}" var="ticket">
 						<tr>
-							<td colspan="5">
-								<div class="ui ribbon label">
-									Nenhum ticket de saída foi cadastrado
-								</div>
-							</td>
+							<td>${ticket.id}</td>
+							<td>${ticket.car.board}</td>
+							<td><fmt:formatDate value="${ticket.horaEntrada.time}"
+									pattern="dd/MM/yyyy HH:mm:ss" /></td>
+							<td><fmt:formatDate value="${ticket.horaSaida.time}"
+									pattern="dd/MM/yyyy HH:mm:ss" /></td>
+							<td>${ticket.dispositivoEntrada.description}</td>
+							<td>${ticket.dispositivoSaida.description}</td>
 						</tr>
-					</tbody>
-				</c:if>
+					</c:forEach>
+				</tbody>
+			</c:if>
+			<c:if test="${fn:length(tickets_saida) == 0}">
+				<tbody>
+					<tr>
+						<td colspan="5">
+							<div class="ui ribbon label">Nenhum ticket de saída foi
+								cadastrado</div>
+						</td>
+					</tr>
+				</tbody>
+			</c:if>
 			<tfoot class="full-width">
 				<tr>
 					<th colspan="7">

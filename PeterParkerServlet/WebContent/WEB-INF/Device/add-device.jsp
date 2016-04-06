@@ -25,11 +25,11 @@
 				</h4>
 				<div class="field">
 					<label>Localização</label>
-					<input type="text" name="localizacao" />
+					<input type="text" name="localizacao" required />
 				</div>
 				<div class="field">
 					<label>Descrição</label>
-					<input type="text" name="descricao" />
+					<input type="text" name="descricao" required />
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />
 			</form>
