@@ -8,7 +8,7 @@ public class ConnectDB {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/peter_parker";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "root";
 
 	public Connection getConnection() {
 		System.out.println("Connecting database...");

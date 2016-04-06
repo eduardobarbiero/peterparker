@@ -9,7 +9,7 @@ public class ConnectionDB {
 	public static Connection con = null;
 	public static ConnectionDB instance = null;
 	private static final String DATABASE = "peter_parker";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "root";
 	private static final String USER = "root";
 
 	public ConnectionDB() {
