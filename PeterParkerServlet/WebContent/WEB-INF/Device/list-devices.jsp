@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,17 +30,34 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach items="${devices}" var="device">
+			<c:if test="${fn:length(devices) > 0}">
+				<tbody>
+					<c:forEach items="${devices}" var="device">
+						<tr>
+							<td>${device.id}</td>
+							<td>${device.address}</td>
+							<td>${device.description}</td>
+							<td>
+								<form method="POST" action="/PeterParker/device/remove">
+									<input type="hidden" name="id" value="${device.id}" />
+									<input type="submit" value="Remover" class="ui button red" />
+								</form>
+							</td>
+						</tr>					
+					</c:forEach>				
+				</tbody>
+			</c:if>
+			<c:if test="${fn:length(devices) == 0}">
+				<tbody>
 					<tr>
-						<td>${device.id}</td>
-						<td>${device.address}</td>
-						<td>${device.description}</td>
-						<td><a> <i class="trash outline icon"></i>
-						</a></td>
-					</tr>					
-				</c:forEach>				
-			</tbody>
+						<td colspan="4">
+							<div class="ui ribbon label">
+								Nenhum dispositivo foi cadastrado
+							</div>
+						</td>
+					</tr>				
+				</tbody>
+			</c:if>			
 			<tfoot class="full-width">
 				<tr>
 					<th colspan="4">

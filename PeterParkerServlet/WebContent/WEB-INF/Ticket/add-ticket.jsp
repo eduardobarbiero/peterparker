@@ -28,7 +28,7 @@
 				Informações do ticket
 				</h4>
 				<div class="field">
-					<label>Carro</label> <select type="text" name="carro_id">
+					<label>Carro</label> <select type="text" name="carro_id" required>
 						<c:forEach items="${cars}" var="car">
 							<option value="${car.id}">${car.board}</option>
 						</c:forEach>
@@ -53,7 +53,7 @@
 				<div class="field">
 					<label>Dispositivos</label>
 					<div class="field">
-						<select type="text" name="dispositivo_entrada">
+						<select type="text" name="dispositivo_entrada" required>
 							<c:forEach items="${devices}" var="device">
 								<option value="${device.id}">${device.description}</option>
 							</c:forEach>

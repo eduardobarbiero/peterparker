@@ -25,11 +25,11 @@
 				</h4>
 				<div class="field">
 					<label>Placa</label>
-					<input type="text" name="placa" />
+					<input type="text" name="placa" required />
 				</div>
 				<div class="field">
 					<label>Cor</label>
-					<input type="text" name="cor" />
+					<input type="text" name="cor" required />
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />
 			</form>
