@@ -51,7 +51,9 @@
 											value="${ticket.id}" /> <select type="text"
 											name="dispositivo_saida">
 											<c:forEach items="${devices}" var="device">
-												<option value="${device.id}">${device.description}</option>
+												<c:if test="${device.getIsActive()}">
+													<option value="${device.id}">${device.description}</option>
+												</c:if>
 											</c:forEach>
 										</select> <input type="submit" value="Saiu" class="ui button primary"
 											style="margin: 10px 0">

@@ -30,24 +30,26 @@
 					<th></th>
 				</tr>
 			</thead>
-			<c:if test="${fn:length(cars) > 0}">
+			<c:if test="${cars.isEveryElementActive()}">
 				<tbody>
 					<c:forEach items="${cars}" var="car">
-						<tr>
-							<td>${car.id}</td>
-							<td>${car.board}</td>
-							<td>${car.color}</td>
-							<td>
-								<form method="POST" action="/PeterParker/car/remove">
-									<input type="hidden" name="id" value="${car.id}" /> <input type="submit"
-										class="ui button red" value="Remover" />
-								</form>
-							</td>
-						</tr>
+						<c:if test="${car.getIsActive()}">
+							<tr>
+								<td>${car.id}</td>
+								<td>${car.board}</td>
+								<td>${car.color}</td>
+								<td>
+									<form method="POST" action="/PeterParker/car/remove">
+										<input type="hidden" name="id" value="${car.id}" /> <input type="submit"
+											class="ui button red" value="Remover" />
+									</form>
+								</td>
+							</tr>
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</c:if>
-			<c:if test="${fn:length(cars) == 0}">
+			<c:if test="${!cars.isEveryElementActive()}">
 				<tbody>
 					<tr>
 						<td colspan="4">

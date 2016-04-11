@@ -4,16 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.peterparker.models.Car;
 
 public class CarDAO {
 
-	private static final String INSERT_CAR = "INSERT INTO CARRO (placa, cor) Values (?, ?)";
+	private static final String INSERT_CAR = "INSERT INTO CARRO (placa, cor, ativo) Values (?, ?, TRUE)";
 	private static final String SELECT_CAR = "SELECT * FROM CARRO";
-	private static final String REMOVE_CAR = "DELETE FROM  CARRO WHERE carro_id=?";
+	private static final String REMOVE_CAR = "UPDATE CARRO SET ATIVO=FALSE WHERE CARRO_ID=?";
 	private static final String GET_CAR_BY_BOARD = "SELECT * FROM Carro WHERE placa = '";
 
 	private Connection con = null;
@@ -44,7 +43,7 @@ public class CarDAO {
 	}
 
 	public List<Car> get() {
-		List<Car> cars = new ArrayList<Car>();
+		List<Car> cars = new CarList();
 		try {
 			this.stmt = this.con.prepareStatement(SELECT_CAR);
 			ResultSet rs = this.stmt.executeQuery();
@@ -55,6 +54,7 @@ public class CarDAO {
 				car.setId(rs.getLong("carro_id"));
 				car.setBoard(rs.getString("placa"));
 				car.setColor(rs.getString("cor"));
+				car.setIsActive(rs.getBoolean("ativo"));
 
 				// adicionando o objeto à lista
 				cars.add(car);

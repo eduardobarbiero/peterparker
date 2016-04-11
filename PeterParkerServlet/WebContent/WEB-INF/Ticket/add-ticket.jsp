@@ -30,7 +30,9 @@
 				<div class="field">
 					<label>Carro</label> <select type="text" name="carro_id" required>
 						<c:forEach items="${cars}" var="car">
-							<option value="${car.id}">${car.board}</option>
+							<c:if test="${car.getIsActive()}">
+								<option value="${car.id}">${car.board}</option>
+							</c:if>
 						</c:forEach>
 					</select>
 				</div>
@@ -55,7 +57,9 @@
 					<div class="field">
 						<select type="text" name="dispositivo_entrada" required>
 							<c:forEach items="${devices}" var="device">
-								<option value="${device.id}">${device.description}</option>
+								<c:if test="${device.getIsActive()}">
+									<option value="${device.id}">${device.description}</option>
+								</c:if>
 							</c:forEach>
 						</select>
 					</div>
