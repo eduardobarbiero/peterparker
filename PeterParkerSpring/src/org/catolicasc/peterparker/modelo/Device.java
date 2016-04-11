@@ -1,13 +1,23 @@
 package org.catolicasc.peterparker.modelo;
 
+import javax.validation.constraints.NotNull;
+
 public class Device {
 
 	private Long id;
-	private String address;
-	private String description;
+
+	@NotNull
+	private String localizacao;
+	private String descricao;
 
 	public Device(Long id) {
 		this.id = id;
+	}
+
+	public Device(Long id, String localizacao, String descricao) {
+		this.id = id;
+		this.localizacao = localizacao;
+		this.descricao = descricao;
 	}
 
 	public Device() {
@@ -21,20 +31,20 @@ public class Device {
 		this.id = id;
 	}
 
-	public String getAddress() {
-		return this.address;
+	public String getLocalizacao() {
+		return this.localizacao;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setLocalizacao(String localizacao) {
+		this.localizacao = localizacao;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getDescricao() {
+		return this.descricao;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

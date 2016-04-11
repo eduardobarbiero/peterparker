@@ -24,7 +24,6 @@ public class DeviceDAO {
 		try {
 			this.con = new ConnectionFactory().getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -34,8 +33,8 @@ public class DeviceDAO {
 			this.stmt = this.con.prepareStatement(INSERT_DEVICE);
 
 			// Seta os valores
-			this.stmt.setString(1, device.getAddress());
-			this.stmt.setString(2, device.getDescription());
+			this.stmt.setString(1, device.getLocalizacao());
+			this.stmt.setString(2, device.getDescricao());
 
 			// Executa
 			this.stmt.execute();
@@ -55,8 +54,8 @@ public class DeviceDAO {
 				// Criando o objeto Contato
 				Device device = new Device();
 				device.setId(rs.getLong("dispositivo_id"));
-				device.setAddress(rs.getString("localizacao"));
-				device.setDescription(rs.getString("descricao"));
+				device.setLocalizacao(rs.getString("localizacao"));
+				device.setDescricao(rs.getString("descricao"));
 
 				// adicionando o objeto à lista
 				devices.add(device);
@@ -73,8 +72,8 @@ public class DeviceDAO {
 	public void update(Device device) throws SQLException {
 		try {
 			this.stmt = this.con.prepareStatement(UPDATE_DEVICE);
-			this.stmt.setString(1, device.getAddress());
-			this.stmt.setString(2, device.getDescription());
+			this.stmt.setString(1, device.getLocalizacao());
+			this.stmt.setString(2, device.getDescricao());
 			this.stmt.setLong(3, device.getId());
 			this.stmt.execute();
 		} catch (SQLException e) {
@@ -106,8 +105,8 @@ public class DeviceDAO {
 				// Criando o objeto Contato
 				device = new Device();
 				device.setId(rs.getLong("dispositivo_id"));
-				device.setAddress(rs.getString("localizacao"));
-				device.setDescription(rs.getString("descricao"));
+				device.setLocalizacao(rs.getString("localizacao"));
+				device.setDescricao(rs.getString("descricao"));
 
 				// adicionando o objeto à lista
 			}

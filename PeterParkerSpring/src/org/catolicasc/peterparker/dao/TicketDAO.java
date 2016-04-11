@@ -16,12 +16,13 @@ import org.catolicasc.peterparker.modelo.Ticket;
 
 public class TicketDAO {
 
-	private static final String INSERT_TICKET = "INSERT INTO TICKET (carro_id, hora_entrada, dispositivo_entrada) Values (?,?,?)";
-	private static final String GET_ID_BY_BOARD = "SELECT t.ticket_id FROM TICKET t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.placa = '";
-	private static final String GET_CAR_BY_BOARD = "SELECT * FROM TICKET t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.placa = '";
-	private static final String GET_LIST_TICKET = "SELECT * FROM TICKET t LEFT JOIN Carro c ON t.carro_id=c.carro_id";
-	private static final String REMOVE_TICKET = "DELETE FROM  TICKETS WHERE ticket_id=?";
-	private static final String UPDATE_TICKET = "UPDATE TICKET SET hora_saida=?, dispositivo_saida=? where ticket_id=?";
+	private static final String INSERT_TICKET = "INSERT INTO ticket (carro_id, hora_entrada, dispositivo_entrada) Values (?,?,?)";
+	private static final String GET_ID_BY_BOARD = "SELECT t.ticket_id FROM ticket t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.carro_id = ";
+	private static final String GET_CAR_BY_BOARD = "SELECT * FROM ticket t LEFT JOIN Carro c ON (t.carro_id=c.carro_id) where c.placa = '";
+	private static final String GET_LIST_TICKET = "SELECT * FROM ticket t LEFT JOIN Carro c ON t.carro_id=c.carro_id WHERE t.hora_saida IS NULL";
+	private static final String GET_LIST_TICKET_OUT = "SELECT * FROM ticket t LEFT JOIN Carro c ON t.carro_id=c.carro_id WHERE t.hora_saida IS NOT NULL";
+	private static final String REMOVE_TICKET = "DELETE FROM  ticket WHERE ticket_id=?";
+	private static final String UPDATE_TICKET = "UPDATE ticket SET hora_saida=?, dispositivo_saida=? where ticket_id=?";
 
 	private Connection con = null;
 	private PreparedStatement stmt = null;
@@ -38,7 +39,7 @@ public class TicketDAO {
 		try {
 			this.stmt = this.con.prepareStatement(INSERT_TICKET);
 
-			this.stmt.setLong(1, ticket.getCar().getId());
+			this.stmt.setLong(1, ticket.getCarro().getId());
 			this.stmt.setTimestamp(2, new Timestamp(ticket.getHoraEntrada().getTimeInMillis()));
 			this.stmt.setLong(3, ticket.getDispositivoEntrada().getId());
 			this.stmt.execute();
@@ -56,21 +57,15 @@ public class TicketDAO {
 
 			while (rs.next()) {
 				Ticket ticket = new Ticket();
-				Device device = new Device(rs.getLong("dispositivo_entrada"));
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(rs.getDate("hora_entrada"));
 				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(rs.getTimestamp("hora_entrada"));
+
 				ticket.setId(rs.getLong("ticket_id"));
-				ticket.setCar(car);
-				ticket.setDispositivoEntrada(device);
-				ticket.setDispositivoSaida(new Device(rs.getLong("dispositivo_saida")));
+				ticket.setCarro(car);
+				ticket.setDispositivoEntrada(new Device(rs.getLong("dispositivo_entrada")));
 				ticket.setHoraEntrada(cal);
-				if (rs.getDate("hora_saida") == null) {
-					ticket.setDispositivoSaida(null);
-				} else {
-					cal.setTime(rs.getDate("hora_saida"));
-					ticket.setHoraSaida(cal);
-				}
 
 				tickets.add(ticket);
 			}
@@ -81,15 +76,47 @@ public class TicketDAO {
 		}
 	}
 
-	public void remove(Ticket ticket) throws SQLException {
+	public List<Ticket> getListOut() {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		try {
+			this.stmt = this.con.prepareStatement(GET_LIST_TICKET_OUT);
+			ResultSet rs = this.stmt.executeQuery();
+
+			while (rs.next()) {
+				Ticket ticket = new Ticket();
+				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
+
+				Calendar horaEntrada = Calendar.getInstance();
+				horaEntrada.setTime(rs.getTimestamp("hora_entrada"));
+
+				ticket.setId(rs.getLong("ticket_id"));
+				ticket.setCarro(car);
+				ticket.setDispositivoEntrada(new Device(rs.getLong("dispositivo_entrada")));
+				ticket.setDispositivoSaida(new Device(rs.getLong("dispositivo_saida")));
+				ticket.setHoraEntrada(horaEntrada);
+
+				Calendar horaSaida = Calendar.getInstance();
+				horaSaida.setTime(rs.getTimestamp("hora_saida"));
+
+				ticket.setHoraSaida(horaSaida);
+
+				tickets.add(ticket);
+			}
+			this.stmt.close();
+			return tickets;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void remove(Ticket ticket) {
 		try {
 			this.stmt = this.con.prepareStatement(REMOVE_TICKET);
 			this.stmt.setLong(1, ticket.getId());
 			this.stmt.execute();
+			this.stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			this.stmt.close();
 		}
 	}
 
@@ -103,10 +130,10 @@ public class TicketDAO {
 			Car carro = new Car();
 			if (rs.next()) {
 				carro.setId(rs.getLong("carro_id"));
-				carro.setBoard(rs.getString("placa"));
-				carro.setColor(rs.getString("cor"));
+				carro.setPlaca(rs.getString("placa"));
+				carro.setCor(rs.getString("cor"));
 			}
-			ticket.setCar(carro);
+			ticket.setCarro(carro);
 			this.stmt.close();
 
 			return ticket;
@@ -115,11 +142,11 @@ public class TicketDAO {
 		}
 	}
 
-	public Ticket getById(String placa) {
+	public Ticket getById(Long id) {
 		Ticket ticket = new Ticket();
 		try {
 
-			this.stmt = this.con.prepareStatement(GET_ID_BY_BOARD + placa + "'");
+			this.stmt = this.con.prepareStatement(GET_ID_BY_BOARD + id);
 			ResultSet rs = this.stmt.executeQuery();
 
 			if (rs.next()) {

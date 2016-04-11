@@ -15,7 +15,7 @@ public class CarDAO {
 	private static final String INSERT_CAR = "INSERT INTO CARRO (placa, cor) Values (?, ?)";
 	private static final String SELECT_CAR = "SELECT * FROM CARRO";
 	private static final String REMOVE_CAR = "DELETE FROM  CARRO WHERE carro_id=?";
-	private static final String GET_CAR_BY_BOARD = "SELECT * FROM Carro WHERE placa = '";
+	private static final String GET_CAR_BY_BOARD = "SELECT * FROM Carro WHERE carro_id = ";
 
 	private Connection con = null;
 	private PreparedStatement stmt = null;
@@ -33,8 +33,8 @@ public class CarDAO {
 			this.stmt = this.con.prepareStatement(INSERT_CAR);
 
 			// Seta os valores
-			this.stmt.setString(1, car.getBoard());
-			this.stmt.setString(2, car.getColor());
+			this.stmt.setString(1, car.getPlaca());
+			this.stmt.setString(2, car.getCor());
 
 			// Executa
 			this.stmt.execute();
@@ -53,9 +53,9 @@ public class CarDAO {
 			while (rs.next()) {
 				// Criando o objeto Contato
 				Car car = new Car();
-				car.setId(rs.getLong("id"));
-				car.setBoard(rs.getString("placa"));
-				car.setColor(rs.getString("cor"));
+				car.setId(rs.getLong("carro_id"));
+				car.setPlaca(rs.getString("placa"));
+				car.setCor(rs.getString("cor"));
 
 				// adicionando o objeto à lista
 				cars.add(car);
@@ -69,16 +69,16 @@ public class CarDAO {
 		}
 	}
 
-	public Car getIdByBoard(String placa) {
+	public Car getById(Long id) {
 		Car car = new Car();
 		try {
-			this.stmt = this.con.prepareStatement(GET_CAR_BY_BOARD + placa + "'");
+			this.stmt = this.con.prepareStatement(GET_CAR_BY_BOARD + id);
 			ResultSet rs = this.stmt.executeQuery();
 
 			if (rs.next()) {
 				car.setId(rs.getLong("carro_id"));
-				car.setBoard(rs.getString("placa"));
-				car.setColor(rs.getString("cor"));
+				car.setPlaca(rs.getString("placa"));
+				car.setCor(rs.getString("cor"));
 			}
 
 		} catch (SQLException e) {

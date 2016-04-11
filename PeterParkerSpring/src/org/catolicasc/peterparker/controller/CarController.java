@@ -2,12 +2,9 @@ package org.catolicasc.peterparker.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.catolicasc.peterparker.dao.CarDAO;
 import org.catolicasc.peterparker.modelo.Car;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,34 +19,29 @@ public class CarController {
 
 	@RequestMapping("/formCarro")
 	public String formulario() {
-		return "carro/formulario";
+		return "car/add-car";
 	}
 
 	@RequestMapping("/adicionaCarro")
-	public String adiciona(@Valid Car car, BindingResult result) {
-
-		if (result.hasErrors()) {
-			return "formulario";
-		}
-
-		System.out.println("Conta adicionada é: " + car.getBoard());
+	public String adiciona(Car car) {
+		System.out.println("Carro adicionado é: " + car.getPlaca());
 		this.cDao.add(car);
 
-		return "redirect:listaCarros";
+		return "redirect:car";
 	}
 
 	@RequestMapping("/removeCarro")
 	public String remove(Car car) {
 		this.cDao.remove(car);
 
-		return "redirect:listaContas";
+		return "redirect:car";
 	}
 
-	@RequestMapping("/listaCarros")
+	@RequestMapping("/car")
 	public ModelAndView lista() {
 		List<Car> cars = this.cDao.get();
 
-		ModelAndView mv = new ModelAndView("conta/lista");
+		ModelAndView mv = new ModelAndView("car/list-cars");
 		mv.addObject("cars", cars);
 
 		return mv;

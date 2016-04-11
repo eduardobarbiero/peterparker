@@ -3,15 +3,13 @@ package org.catolicasc.peterparker.modelo;
 public class Car {
 
 	private Long id;
-
-	private String board;
-
-	private String color;
+	private String placa;
+	private String cor;
 
 	public Car(Long id, String board, String color) {
 		this.id = id;
-		this.board = board;
-		this.color = color;
+		this.placa = board;
+		this.cor = color;
 	}
 
 	public Car() {
@@ -25,19 +23,19 @@ public class Car {
 		this.id = id;
 	}
 
-	public String getBoard() {
-		return this.board;
+	public String getPlaca() {
+		return this.placa;
 	}
 
-	public void setBoard(String board) {
-		this.board = board;
+	public void setPlaca(String placa) {
+		this.placa = placa;
 	}
 
-	public String getColor() {
-		return this.color;
+	public String getCor() {
+		return this.cor;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
 }

@@ -5,18 +5,30 @@ import java.util.Calendar;
 public class Ticket {
 
 	private Long id;
-	private Car car;
+	private Car carro;
 	private Device dispositivoEntrada;
 	private Device dispositivoSaida;
 	private Calendar horaEntrada;
 	private Calendar horaSaida;
 
-	public Car getCar() {
-		return this.car;
+	public Ticket(Long id, Car car, Device entrada, Device saida, Calendar horaEntrada, Calendar horaSaida) {
+		this.id = id;
+		this.carro = car;
+		this.dispositivoEntrada = entrada;
+		this.dispositivoSaida = saida;
+		this.horaEntrada = horaEntrada;
+		this.horaSaida = horaSaida;
 	}
 
-	public void setCar(Car car) {
-		this.car = car;
+	public Ticket() {
+	}
+
+	public Car getCarro() {
+		return this.carro;
+	}
+
+	public void setCarro(Car car) {
+		this.carro = car;
 	}
 
 	public Device getDispositivoEntrada() {

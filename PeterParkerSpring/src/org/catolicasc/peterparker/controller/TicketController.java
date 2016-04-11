@@ -29,10 +29,13 @@ public class TicketController {
 
 	@RequestMapping("/formTicket")
 	public ModelAndView formulario() {
-		ModelAndView mv = new ModelAndView("ticket/formulario");
+		ModelAndView mv = new ModelAndView("ticket/add-ticket");
+
+		List<Car> cars = this.cDao.get();
 		ArrayList<Device> devices = this.dDao.get();
 
 		mv.addObject("devices", devices);
+		mv.addObject("cars", cars);
 
 		return mv;
 	}
@@ -40,40 +43,48 @@ public class TicketController {
 	@RequestMapping("/adicionaTicket")
 	public String adicionaTicket(@ModelAttribute Ticket ticket) {
 
-		Ticket existsTicket = this.tDao.getByBoard(ticket.getCar().getBoard());
+		this.tDao.getById(ticket.getCarro().getId());
 
-		// Caso existir carro com a placa cadastrado, faz update.
-		if (existsTicket.getCar().getBoard() != null) {
-			Car car = new Car();
-			car.setId(existsTicket.getCar().getId());
-			ticket.setCar(car);
-			ticket.setHoraSaida(Calendar.getInstance());
-			Device device = this.dDao.getDeviceById(ticket.getDispositivoEntrada().getId());
-			ticket.setDispositivoSaida(device);
-			ticket.setId(this.tDao.getById(existsTicket.getCar().getBoard()).getId());
+		// Caso contrário, cria um novo ticket.
+		Car car = this.cDao.getById(ticket.getCarro().getId());
+		ticket.setCarro(car);
+		ticket.setHoraEntrada(Calendar.getInstance());
+		Device device = this.dDao.getDeviceById(ticket.getDispositivoEntrada().getId());
+		ticket.setDispositivoEntrada(device);
+		this.tDao.add(ticket);
 
-			this.tDao.update(ticket);
-		} else {
-			// Caso contrário, cria um novo ticket.
-			this.cDao.add(ticket.getCar());
-			Car car = this.cDao.getIdByBoard(ticket.getCar().getBoard());
-			ticket.setCar(car);
-			ticket.setHoraEntrada(Calendar.getInstance());
-			Device device = this.dDao.getDeviceById(ticket.getDispositivoEntrada().getId());
-			ticket.setDispositivoEntrada(device);
-			this.tDao.add(ticket);
-		}
-
-		return "redirect:lista";
+		return "redirect:ticket";
 	}
 
-	@RequestMapping("/lista")
+	@RequestMapping("/ticket")
 	public ModelAndView retornaLista() {
-		ModelAndView mv = new ModelAndView("ticket/lista");
+		ModelAndView mv = new ModelAndView("ticket/list-tickets");
 		List<Ticket> tickets = this.tDao.getList();
+		List<Ticket> ticketsout = this.tDao.getListOut();
+		List<Device> devices = this.dDao.get();
 
 		mv.addObject("tickets", tickets);
+		mv.addObject("ticketsout", ticketsout);
+		mv.addObject("devices", devices);
 
 		return mv;
+	}
+
+	@RequestMapping("/alteraTicket")
+	public String alteraTicket(Ticket ticket) {
+
+		ticket.setHoraSaida(Calendar.getInstance());
+		Device device = this.dDao.getDeviceById(ticket.getDispositivoSaida().getId());
+		ticket.setDispositivoSaida(device);
+
+		this.tDao.update(ticket);
+		return "redirect:ticket";
+	}
+
+	@RequestMapping("/removeTicket")
+	public String remove(Ticket ticket) {
+		this.tDao.remove(ticket);
+
+		return "redirect:ticket";
 	}
 }

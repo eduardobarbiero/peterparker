@@ -30,3 +30,4 @@ CREATE TABLE IF NOT EXISTS TICKET(
   FOREIGN KEY(dispositivo_saida) REFERENCES Dispositivo(dispositivo_id)
 );
 
+
