@@ -30,24 +30,26 @@
 					<th></th>
 				</tr>
 			</thead>
-			<c:if test="${fn:length(devices) > 0}">
+			<c:if test="${devices.isEveryElementActive()}">
 				<tbody>
 					<c:forEach items="${devices}" var="device">
-						<tr>
-							<td>${device.id}</td>
-							<td>${device.address}</td>
-							<td>${device.description}</td>
-							<td>
-								<form method="POST" action="/PeterParker/device/remove">
-									<input type="hidden" name="id" value="${device.id}" />
-									<input type="submit" value="Remover" class="ui button red" />
-								</form>
-							</td>
-						</tr>					
+						<c:if test="${device.getIsActive()}">
+							<tr>
+								<td>${device.id}</td>
+								<td>${device.address}</td>
+								<td>${device.description}</td>
+								<td>
+									<form method="POST" action="/PeterParker/device/remove">
+										<input type="hidden" name="id" value="${device.id}" />
+										<input type="submit" value="Remover" class="ui button red" />
+									</form>
+								</td>
+							</tr>
+						</c:if>					
 					</c:forEach>				
 				</tbody>
 			</c:if>
-			<c:if test="${fn:length(devices) == 0}">
+			<c:if test="${!devices.isEveryElementActive()}">
 				<tbody>
 					<tr>
 						<td colspan="4">

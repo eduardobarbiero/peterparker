@@ -4,16 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.peterparker.models.Device;
 
 public class DeviceDAO {
 
-	private static final String INSERT_DEVICE = "INSERT INTO DISPOSITIVO (localizacao, descricao) Values (?, ?)";
+	private static final String INSERT_DEVICE = "INSERT INTO DISPOSITIVO (localizacao, descricao, ativo) Values (?, ?, TRUE)";
 	private static final String SELECT_DEVICE = "SELECT * FROM DISPOSITIVO";
-	private static final String REMOVE_DEVICE = "DELETE FROM  DISPOSITIVO WHERE dispositivo_id=?";
+	private static final String REMOVE_DEVICE = "UPDATE DISPOSITIVO SET ATIVO=FALSE WHERE DISPOSITIVO_ID=?;";
 	private static final String UPDATE_DEVICE = "UPDATE DISPOSITIVO SET localizacao=?, descricao=? where dispositivo_id=?";
 	private static final String GET_DEVICE_BY_ID = "SELECT * FROM DISPOSITIVO where dispositivo_id = ";
 
@@ -45,8 +44,8 @@ public class DeviceDAO {
 		}
 	}
 
-	public ArrayList<Device> get() {
-		ArrayList<Device> devices = new ArrayList<Device>();
+	public List<Device> get() {
+		List<Device> devices = new DeviceList();
 		try {
 			this.stmt = this.con.prepareStatement(SELECT_DEVICE);
 			ResultSet rs = this.stmt.executeQuery();
@@ -57,6 +56,7 @@ public class DeviceDAO {
 				device.setId(rs.getLong("dispositivo_id"));
 				device.setAddress(rs.getString("localizacao"));
 				device.setDescription(rs.getString("descricao"));
+				device.setIsActive(rs.getBoolean("ativo"));
 
 				// adicionando o objeto à lista
 				devices.add(device);

@@ -3,12 +3,10 @@ package com.peterparker.models;
 import java.util.Set;
 
 public class Car {
-
 	private Long id;
-
 	private String board;
-
 	private String color;
+	private boolean isActive;
 
 	public Car(Long id, String board, String color) {
 		this.id = id;
@@ -17,6 +15,14 @@ public class Car {
 	}
 
 	public Car() {
+	}
+	
+	public boolean getIsActive() {
+		return this.isActive;
+	}
+	
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public Long getId() {

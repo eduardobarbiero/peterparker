@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS CARRO(
   carro_id int(11) auto_increment not null,
   placa varchar(30),
   cor varchar(30),
+  ativo bool,
   PRIMARY KEY(carro_id)
 );
 
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS DISPOSITIVO(
   dispositivo_id int(11) auto_increment not null,
   localizacao varchar(80),
   descricao varchar(80),
-  PRIMARY KEY(dispositivo_id)  
+  ativo bool,
+  PRIMARY KEY(dispositivo_id)
 );
 
 CREATE TABLE IF NOT EXISTS TICKET(
