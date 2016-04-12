@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<package name="peterparker" extends="struts-default">
+		<action name="device" class="com.peterparker.controller.ActionListaDevice"
+			method="execute">
+			<result name="success">/WEB-INF/Device/list-devices.jsp</result>
+		</action>
+		<action name="car" class="com.peterparker.controller.ActionListaCar"
+			method="execute">
+			<result name="success">/WEB-INF/Car/list-cars.jsp</result>
+		</action>
+		<action name="ticket" class="com.peterparker.controller.ActionListaTicket"
+			method="execute">
+			<result name="success">/WEB-INF/Ticket/list-tickets.jsp</result>
+		</action>	
+		
+		<action name="ticket_add" class="com.peterparker.controller.ActionNewTicket"
+			method="execute">
+			<result name="success">/WEB-INF/Ticket/add-ticket.jsp</result>
+		</action>		
+		<action name="device_add" class="com.peterparker.controller.ActionNewDevice"
+			method="execute">
+			<result name="success">/WEB-INF/Device/add-device.jsp</result>
+		</action>		
+		<action name="car_add" class="com.peterparker.controller.ActionNewCar"
+			method="execute" >
+			<result name="success">/WEB-INF/Car/add-car.jsp</result>
+		</action>	
+		
+		<action name="device_create" class="com.peterparker.controller.ActionCreateDevice"
+			method="execute" >
+			<result name="success">/WEB-INF/Device/list-devices.jsp</result>
+		</action>
+		
+		<action name="car_create" class="com.peterparker.controller.ActionCreateCar"
+			method="execute" >
+			<result name="success">/WEB-INF/Car/list-cars.jsp</result>
+		</action>	
+		
+		<action name="ticket_create" class="com.peterparker.controller.ActionCreateTicket"
+			method="execute" >
+			<result name="success">/WEB-INF/Ticket/list-tickets.jsp</result>
+		</action>			
+	</package>
+</struts>
