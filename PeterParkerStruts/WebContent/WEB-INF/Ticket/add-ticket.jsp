@@ -29,21 +29,18 @@
 				Informações do ticket
 				</h4>
 				<div class="field">
-					<label>Carro</label> <select type="text" name="car.id">						
-						<c:forEach items="${cars}" var="car">
-							<option value="${car.id}">${car.board}</option>
-						</c:forEach>
-					</select>
+					<s:select label="Carro"
+						list="cars"
+						listKey="id" 
+						listValue="board"
+						key="ticket.car.id" />
 				</div>				
 				<div class="field">
-					<label>Dispositivos</label>
-					<div class="field">
-						<select type="text" name="device.id">
-							<c:forEach items="${devices}" var="device">
-								<option value="${device.id}">${device.description}</option>
-							</c:forEach>
-						</select>
-					</div>					
+					<s:select label="Dispositivo"
+						list="devices"
+						listKey="id" 
+						listValue="description"
+						key="ticket.dispositivoEntrada.id" />		
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />
 		</form>

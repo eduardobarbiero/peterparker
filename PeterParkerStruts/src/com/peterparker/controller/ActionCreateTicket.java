@@ -1,5 +1,6 @@
 package com.peterparker.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.peterparker.dao.CarDAO;
@@ -13,40 +14,54 @@ public class ActionCreateTicket {
 	private Ticket ticket;
 	private List<Car> cars;
 	private List<Device> devices;
-	private Car car;
-	private Device device;
+	private List<Ticket> tickets;
 
 	public List<Car> getCars() {
-		return cars;
+		return this.cars;
 	}
-	
+
 	public List<Device> getDevices() {
-		return devices;
-	}	
-	
-	public void setCar(Car car){
+		return this.devices;
+	}
+
+	public Ticket getTicket() {
+		return this.ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
+
+	public void setCar(Car car) {
 		this.ticket.setCar(new CarDAO().getIdById(car.getId().toString()));
 	}
-	
-	public void setDispositivoEntrada(Device device){
-		this.ticket.setDispositivoEntrada(new DeviceDAO().getDeviceById(device.getId().toString()));		
+
+	public void setDispositivoEntrada(Device device) {
+		this.ticket.setDispositivoEntrada(new DeviceDAO().getDeviceById(device.getId().toString()));
 	}
-	
+
 	public String execute() throws Exception {
-		//
-		CarDAO dao = new CarDAO();			
+		CarDAO dao = new CarDAO();
+		this.cars = dao.get();
 
-		cars = dao.get();
+		DeviceDAO dao1 = new DeviceDAO();
+		this.devices = dao1.get();
 
-		DeviceDAO dao1 = new DeviceDAO();			
-
-		devices = dao1.get();
-		
-		//
 		TicketDAO tick_dao = new TicketDAO();
-		tick_dao.add(ticket);				
+		this.ticket.setHoraEntrada(Calendar.getInstance());
+		tick_dao.add(this.ticket);
+
+		this.tickets = tick_dao.getList();
 
 		return "success";
+	}
+
+	public List<Ticket> getTickets() {
+		return this.tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 }

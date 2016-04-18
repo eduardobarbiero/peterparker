@@ -35,16 +35,18 @@ public class TicketDAO {
 	}
 
 	public void add(Ticket ticket) {
-		try {
-			this.stmt = this.con.prepareStatement(INSERT_TICKET);
+		if (ticket != null) {
+			try {
+				this.stmt = this.con.prepareStatement(INSERT_TICKET);
 
-			this.stmt.setLong(1, ticket.getCar().getId());
-			this.stmt.setTimestamp(2, new Timestamp(ticket.getHoraEntrada().getTimeInMillis()));
-			this.stmt.setLong(3, ticket.getDispositivoEntrada().getId());
-			this.stmt.execute();
-			this.stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+				this.stmt.setLong(1, ticket.getCar().getId());
+				this.stmt.setTimestamp(2, new Timestamp(ticket.getHoraEntrada().getTimeInMillis()));
+				this.stmt.setLong(3, ticket.getDispositivoEntrada().getId());
+				this.stmt.execute();
+				this.stmt.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 
@@ -54,10 +56,12 @@ public class TicketDAO {
 			this.stmt = this.con.prepareStatement(GET_LIST_TICKET);
 			ResultSet rs = this.stmt.executeQuery();
 
-			while (rs.next()) {				
+			while (rs.next()) {
 				Ticket ticket = new Ticket();
-				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("descricao"));
-				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"), rs.getString("descricao"));
+				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"),
+						rs.getString("descricao"));
+				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
+						rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
 				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
@@ -82,17 +86,19 @@ public class TicketDAO {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public List<Ticket> getListLeft() {
 		List<Ticket> tickets = new ArrayList<Ticket>();
 		try {
 			this.stmt = this.con.prepareStatement(GET_LIST_TICKET_LEFT);
 			ResultSet rs = this.stmt.executeQuery();
 
-			while (rs.next()) {				
-				Ticket ticket = new Ticket();				
-				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"), rs.getString("dispositivo_entrada_desc"));
-				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"), rs.getString("descricao"));
+			while (rs.next()) {
+				Ticket ticket = new Ticket();
+				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"),
+						rs.getString("dispositivo_entrada_desc"));
+				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
+						rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
 				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
