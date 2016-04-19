@@ -30,20 +30,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${devices}" var="device">
+				<c:forEach items="${dispositivos}" var="dispositivo">
 					<tr>
-						<td>${device.id}</td>
-						<td>${device.address}</td>
-						<td>${device.description}</td>
-						<td><a> <i class="trash outline icon"></i>
-						</a></td>
+						<td>${dispositivo.id}</td>
+						<td>${dispositivo.localizacao}</td>
+						<td>${dispositivo.descricao}</td>
 					</tr>					
 				</c:forEach>				
 			</tbody>
 			<tfoot class="full-width">
 				<tr>
 					<th colspan="4">
-						<div onclick="location.href='/PeterParkerStruts/device/new';"
+						<div onclick="location.href='/PeterParkerStruts/device_add';"
 							class="ui right floated small primary labeled icon button">
 							<i class="plus icon"></i> Adicionar dispositivo
 						</div>

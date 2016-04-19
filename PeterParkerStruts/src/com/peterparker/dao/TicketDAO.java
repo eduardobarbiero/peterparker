@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.peterparker.models.Car;
-import com.peterparker.models.Device;
+import com.peterparker.models.Carro;
+import com.peterparker.models.Dispositivo;
 import com.peterparker.models.Ticket;
 
 public class TicketDAO {
@@ -39,7 +39,7 @@ public class TicketDAO {
 			try {
 				this.stmt = this.con.prepareStatement(INSERT_TICKET);
 
-				this.stmt.setLong(1, ticket.getCar().getId());
+				this.stmt.setLong(1, ticket.getCarro().getId());
 				this.stmt.setTimestamp(2, new Timestamp(ticket.getHoraEntrada().getTimeInMillis()));
 				this.stmt.setLong(3, ticket.getDispositivoEntrada().getId());
 				this.stmt.execute();
@@ -58,16 +58,16 @@ public class TicketDAO {
 
 			while (rs.next()) {
 				Ticket ticket = new Ticket();
-				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"),
-						rs.getString("descricao"));
-				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
+				Dispositivo dispositivo = new Dispositivo(rs.getLong("dispositivo_entrada"),
+						rs.getString("localizacao"), rs.getString("descricao"));
+				Dispositivo device_saida = new Dispositivo(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
 						rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
-				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
+				Carro car = new Carro(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
 				ticket.setId(rs.getLong("ticket_id"));
-				ticket.setCar(car);
-				ticket.setDispositivoEntrada(device);
+				ticket.setCarro(car);
+				ticket.setDispositivoEntrada(dispositivo);
 				ticket.setDispositivoSaida(device_saida);
 				ticket.setHoraEntrada(cal);
 				if (rs.getTimestamp("hora_saida") == null) {
@@ -95,18 +95,18 @@ public class TicketDAO {
 
 			while (rs.next()) {
 				Ticket ticket = new Ticket();
-				Device device = new Device(rs.getLong("dispositivo_entrada"), rs.getString("localizacao"),
-						rs.getString("dispositivo_entrada_desc"));
-				Device device_saida = new Device(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
+				Dispositivo dispositivo = new Dispositivo(rs.getLong("dispositivo_entrada"),
+						rs.getString("localizacao"), rs.getString("dispositivo_entrada_desc"));
+				Dispositivo device_saida = new Dispositivo(rs.getLong("dispositivo_saida"), rs.getString("localizacao"),
 						rs.getString("descricao"));
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rs.getTimestamp("hora_entrada"));
-				Car car = new Car(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
+				Carro car = new Carro(rs.getLong("carro_id"), rs.getString("placa"), rs.getString("cor"));
 				ticket.setId(rs.getLong("ticket_id"));
-				ticket.setCar(car);
-				System.out.println(device.getDescription());
-				System.out.println(device_saida.getDescription());
-				ticket.setDispositivoEntrada(device);
+				ticket.setCarro(car);
+				System.out.println(dispositivo.getDescricao());
+				System.out.println(device_saida.getDescricao());
+				ticket.setDispositivoEntrada(dispositivo);
 				ticket.setDispositivoSaida(device_saida);
 				ticket.setHoraEntrada(cal);
 				if (rs.getTimestamp("hora_saida") == null) {
@@ -145,13 +145,13 @@ public class TicketDAO {
 			this.stmt = this.con.prepareStatement(GET_CAR_BY_BOARD + placa + "'");
 			ResultSet rs = this.stmt.executeQuery();
 
-			Car carro = new Car();
+			Carro carro = new Carro();
 			if (rs.next()) {
 				carro.setId(rs.getLong("carro_id"));
-				carro.setBoard(rs.getString("placa"));
-				carro.setColor(rs.getString("cor"));
+				carro.setPlaca(rs.getString("placa"));
+				carro.setCor(rs.getString("cor"));
 			}
-			ticket.setCar(carro);
+			ticket.setCarro(carro);
 			this.stmt.close();
 
 			return ticket;

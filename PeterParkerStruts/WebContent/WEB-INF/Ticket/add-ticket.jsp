@@ -32,14 +32,14 @@
 					<s:select label="Carro"
 						list="cars"
 						listKey="id" 
-						listValue="board"
-						key="ticket.car.id" />
+						listValue="placa"
+						key="ticket.carro.id" />
 				</div>				
 				<div class="field">
 					<s:select label="Dispositivo"
 						list="devices"
-						listKey="id" 
-						listValue="description"
+						listKey="id"
+						listValue="descricao"
 						key="ticket.dispositivoEntrada.id" />		
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />

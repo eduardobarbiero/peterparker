@@ -25,10 +25,10 @@
 					Informações do dispositivo
 				</h4>
 				<div class="field">					
-					<s:textfield key="device.address" label="Localização"/>					
+					<s:textfield key="dispositivo.localizacao" label="Localização"/>					
 				</div>
 				<div class="field">					
-					<s:textfield key="device.description" label="Descrição"/>					
+					<s:textfield key="dispositivo.descricao" label="Descrição"/>					
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />
 			</form>

@@ -3,30 +3,29 @@ package com.peterparker.controller;
 import java.util.List;
 
 import com.peterparker.dao.CarDAO;
-import com.peterparker.dao.DeviceDAO;
-import com.peterparker.models.Car;
-import com.peterparker.models.Device;
+import com.peterparker.models.Carro;
 
-public class ActionCreateCar {	
-	private Car car;
-	private List<Car> cars;
+public class ActionCreateCar {
+	private Carro carro;
+	private List<Carro> cars;
 
-	public List<Car> getCars() {
-		return cars;
-	}	
-	
-	public Car getCar() {
-		return car;
+	public List<Carro> getCars() {
+		return this.cars;
 	}
-	
-	public void setCar(Car car) {
-		this.car = car;
+
+	public Carro getCarro() {
+		return this.carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
 	}
 
 	public String execute() throws Exception {
-		CarDAO dao = new CarDAO();			
-		dao.add(car);
-		cars = dao.get();
+		CarDAO dao = new CarDAO();
+		dao.add(this.carro);
+		this.cars = dao.get();
+
 		return "success";
 	}
 

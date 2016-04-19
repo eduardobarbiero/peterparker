@@ -44,6 +44,11 @@
 		<action name="ticket_create" class="com.peterparker.controller.ActionCreateTicket"
 			method="execute" >
 			<result name="success">/WEB-INF/Ticket/list-tickets.jsp</result>
+		</action>
+		
+		<action name="ticket_update" class="com.peterparker.controller.ActionUpdateTicket"
+			method="execute">
+			<result name="success">/WEB-INF/Ticket/list-tickets.jsp</result>
 		</action>			
 	</package>
 </struts>

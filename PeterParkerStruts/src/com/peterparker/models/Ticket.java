@@ -1,42 +1,37 @@
 package com.peterparker.models;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Set;
 
 public class Ticket {
 
 	private Long id;
-	private Car car;
-	private Device dispositivoEntrada;
-	private Device dispositivoSaida;
+	private Carro carro;
+	private Dispositivo dispositivoEntrada;
+	private Dispositivo dispositivoSaida;
 	private Calendar horaEntrada;
 	private Calendar horaSaida;
 
-	public Car getCar() {
-		return this.car;
+	public Carro getCarro() {
+		return this.carro;
 	}
 
-	public void setCar(Car car) {
-		this.car = car;
+	public void setCarro(Carro carro) {
+		this.carro = carro;
 	}
 
-	public Device getDispositivoEntrada() {
+	public Dispositivo getDispositivoEntrada() {
 		return this.dispositivoEntrada;
 	}
 
-	public void setDispositivoEntrada(Device dispositivoEntrada) {
+	public void setDispositivoEntrada(Dispositivo dispositivoEntrada) {
 		this.dispositivoEntrada = dispositivoEntrada;
 	}
 
-	public Device getDispositivoSaida() {
+	public Dispositivo getDispositivoSaida() {
 		return this.dispositivoSaida;
 	}
 
-	public void setDispositivoSaida(Device dispositivoSaida) {
+	public void setDispositivoSaida(Dispositivo dispositivoSaida) {
 		this.dispositivoSaida = dispositivoSaida;
 	}
 

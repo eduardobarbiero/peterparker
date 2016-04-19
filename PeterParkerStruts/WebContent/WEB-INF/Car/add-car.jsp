@@ -25,10 +25,10 @@
 					Informações do carro
 				</h4>
 				<div class="field">					
-					<s:textfield key="car.board" label="Placa"/>					
+					<s:textfield key="carro.placa" label="Placa"/>					
 				</div>
 				<div class="field">					
-					<s:textfield key="car.color" label="Cor"/>					
+					<s:textfield key="carro.placa" label="Cor"/>					
 				</div>
 				<input type="submit" value="Salvar" class="ui button primary" />
 			</form>

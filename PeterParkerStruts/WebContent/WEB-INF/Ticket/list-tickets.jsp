@@ -3,6 +3,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,20 +38,21 @@
 				<c:forEach items="${tickets}" var="ticket">
 					<tr>
 						<td>${ticket.id}</td>
-						<td>${ticket.car.board}</td>
+						<td>${ticket.carro.placa}</td>
 						<td><fmt:formatDate value="${ticket.horaEntrada.time}"
 								pattern="dd/MM/yyyy HH:mm:ss" /></td>						
-						<td>${ticket.dispositivoEntrada.description}</td>						
+						<td>${ticket.dispositivoEntrada.descricao}</td>						
 						<td>
 							<div class="field">
 								<form method="POST" action="/PeterParkerStruts/ticket_update"
 									class="ui form">
-									<input type="hidden" id="ticket_id" name="ticket_id" value="${ticket.id}"/>
-									<select type="text" name="dispositivo_saida">
+									<input type="hidden" name="ticket.id" value="${ticket.id}"/>
+									<select name="ticket.dispositivoSaida.id">
 										<c:forEach items="${devices}" var="device">
-											<option value="${device.id}">${device.description}</option>
+											<option value="${device.id}">${device.descricao}</option>
 										</c:forEach>
-									</select> <input type="submit" value="Saiu" class="ui button primary">
+									</select>
+									<input type="submit" value="Saiu" class="ui button primary">
 								</form>
 							</div>
 						</td>
@@ -88,13 +90,13 @@
 				<c:forEach items="${ticketsSaida}" var="ticket">
 					<tr>
 						<td>${ticket.id}</td>
-						<td>${ticket.car.board}</td>
+						<td>${ticket.carro.placa}</td>
 						<td><fmt:formatDate value="${ticket.horaEntrada.time}"
 								pattern="dd/MM/yyyy HH:mm:ss" /></td>
 						<td><fmt:formatDate value="${ticket.horaSaida.time}"
 								pattern="dd/MM/yyyy HH:mm:ss" /></td>
-						<td>${ticket.dispositivoEntrada.description}</td>
-						<td>${ticket.dispositivoSaida.description}</td>
+						<td>${ticket.dispositivoEntrada.descricao}</td>
+						<td>${ticket.dispositivoSaida.descricao}</td>
 					</tr>
 				</c:forEach>
 

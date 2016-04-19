@@ -30,13 +30,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${cars}" var="car">
+				<c:forEach items="${cars}" var="carro">
 					<tr>
-						<td>${car.id}</td>
-						<td>${car.board}</td>
-						<td>${car.color}</td>
-						<td><a> <i class="trash outline icon"></i>
-						</a></td>
+						<td>${carro.id}</td>
+						<td>${carro.placa}</td>
+						<td>${carro.cor}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

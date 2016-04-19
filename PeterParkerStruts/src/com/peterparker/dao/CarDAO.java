@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.peterparker.models.Car;
+import com.peterparker.models.Carro;
 
 public class CarDAO {
 
@@ -28,13 +28,13 @@ public class CarDAO {
 		}
 	}
 
-	public void add(Car car) {
+	public void add(Carro car) {
 		try {
 			this.stmt = this.con.prepareStatement(INSERT_CAR);
 
 			// Seta os valores
-			this.stmt.setString(1, car.getBoard());
-			this.stmt.setString(2, car.getColor());
+			this.stmt.setString(1, car.getPlaca());
+			this.stmt.setString(2, car.getCor());
 
 			// Executa
 			this.stmt.execute();
@@ -44,18 +44,18 @@ public class CarDAO {
 		}
 	}
 
-	public List<Car> get() {
-		List<Car> cars = new ArrayList<Car>();
+	public List<Carro> get() {
+		List<Carro> cars = new ArrayList<Carro>();
 		try {
 			this.stmt = this.con.prepareStatement(SELECT_CAR);
 			ResultSet rs = this.stmt.executeQuery();
 
 			while (rs.next()) {
 				// Criando o objeto Contato
-				Car car = new Car();
+				Carro car = new Carro();
 				car.setId(rs.getLong("carro_id"));
-				car.setBoard(rs.getString("placa"));
-				car.setColor(rs.getString("cor"));
+				car.setPlaca(rs.getString("placa"));
+				car.setCor(rs.getString("cor"));
 
 				// adicionando o objeto à lista
 				cars.add(car);
@@ -69,16 +69,16 @@ public class CarDAO {
 		}
 	}
 
-	public Car getIdByBoard(String placa) {
-		Car car = new Car();
+	public Carro getIdByBoard(String placa) {
+		Carro car = new Carro();
 		try {
 			this.stmt = this.con.prepareStatement(GET_CAR_BY_BOARD + placa + "'");
 			ResultSet rs = this.stmt.executeQuery();
 
 			if (rs.next()) {
 				car.setId(rs.getLong("carro_id"));
-				car.setBoard(rs.getString("placa"));
-				car.setColor(rs.getString("cor"));
+				car.setPlaca(rs.getString("placa"));
+				car.setCor(rs.getString("cor"));
 			}
 
 		} catch (SQLException e) {
@@ -87,17 +87,17 @@ public class CarDAO {
 
 		return car;
 	}
-	
-	public Car getIdById(String id) {
-		Car car = new Car();
+
+	public Carro getIdById(String id) {
+		Carro car = new Carro();
 		try {
 			this.stmt = this.con.prepareStatement(GET_CAR_BY_ID + id + "'");
 			ResultSet rs = this.stmt.executeQuery();
 
 			if (rs.next()) {
 				car.setId(rs.getLong("carro_id"));
-				car.setBoard(rs.getString("placa"));
-				car.setColor(rs.getString("cor"));
+				car.setPlaca(rs.getString("placa"));
+				car.setCor(rs.getString("cor"));
 			}
 
 		} catch (SQLException e) {
@@ -107,7 +107,7 @@ public class CarDAO {
 		return car;
 	}
 
-	public void remove(Car car) {
+	public void remove(Carro car) {
 		try {
 			this.stmt = this.con.prepareStatement(REMOVE_CAR);
 			this.stmt.setLong(1, car.getId());

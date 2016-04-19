@@ -10,23 +10,15 @@ import com.peterparker.models.Carro;
 import com.peterparker.models.Dispositivo;
 import com.peterparker.models.Ticket;
 
-public class ActionCreateTicket {
+public class ActionUpdateTicket {
 	private Ticket ticket;
 	private List<Carro> cars;
-	private List<Dispositivo> dispositivos;
 	private List<Ticket> tickets;
 	private List<Ticket> ticketsSaida;
+	private List<Dispositivo> dispositivos;
 
 	public List<Carro> getCars() {
 		return this.cars;
-	}
-
-	public List<Ticket> getTicketsSaida() {
-		return this.ticketsSaida;
-	}
-
-	public void setTicketsSaida(List<Ticket> ticketsSaida) {
-		this.ticketsSaida = ticketsSaida;
 	}
 
 	public List<Dispositivo> getDevices() {
@@ -35,6 +27,14 @@ public class ActionCreateTicket {
 
 	public Ticket getTicket() {
 		return this.ticket;
+	}
+
+	public List<Ticket> getTicketsSaida() {
+		return this.ticketsSaida;
+	}
+
+	public void setTicketsSaida(List<Ticket> ticketsSaida) {
+		this.ticketsSaida = ticketsSaida;
 	}
 
 	public void setTicket(Ticket ticket) {
@@ -50,20 +50,15 @@ public class ActionCreateTicket {
 	}
 
 	public String execute() throws Exception {
-		CarDAO dao = new CarDAO();
-		this.cars = dao.get();
-
-		DeviceDAO dao1 = new DeviceDAO();
-		this.dispositivos = dao1.get();
-
 		TicketDAO tick_dao = new TicketDAO();
-		this.ticket.setHoraEntrada(Calendar.getInstance());
-		tick_dao.add(this.ticket);
+		this.ticket.setHoraSaida(Calendar.getInstance());
+		tick_dao.update(this.ticket);
 
-		this.tickets = tick_dao.getList();
+		TicketDAO dao = new TicketDAO();
+		this.tickets = dao.getList();
 
-		TicketDAO dao2 = new TicketDAO();
-		this.ticketsSaida = dao2.getListLeft();
+		TicketDAO dao1 = new TicketDAO();
+		this.ticketsSaida = dao1.getListLeft();
 
 		return "success";
 	}

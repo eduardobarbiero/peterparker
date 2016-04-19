@@ -5,9 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-import com.peterparker.models.Device;
+import com.peterparker.models.Dispositivo;
 
 public class DeviceDAO {
 
@@ -24,18 +23,17 @@ public class DeviceDAO {
 		try {
 			this.con = new ConnectionFactory().getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void add(Device device) {
+	public void add(Dispositivo dispositivo) {
 		try {
 			this.stmt = this.con.prepareStatement(INSERT_DEVICE);
 
 			// Seta os valores
-			this.stmt.setString(1, device.getAddress());
-			this.stmt.setString(2, device.getDescription());
+			this.stmt.setString(1, dispositivo.getLocalizacao());
+			this.stmt.setString(2, dispositivo.getDescricao());
 
 			// Executa
 			this.stmt.execute();
@@ -45,37 +43,37 @@ public class DeviceDAO {
 		}
 	}
 
-	public ArrayList<Device> get() {
-		ArrayList<Device> devices = new ArrayList<Device>();
+	public ArrayList<Dispositivo> get() {
+		ArrayList<Dispositivo> dispositivos = new ArrayList<Dispositivo>();
 		try {
 			this.stmt = this.con.prepareStatement(SELECT_DEVICE);
 			ResultSet rs = this.stmt.executeQuery();
 
 			while (rs.next()) {
 				// Criando o objeto Contato
-				Device device = new Device();
-				device.setId(rs.getLong("dispositivo_id"));
-				device.setAddress(rs.getString("localizacao"));
-				device.setDescription(rs.getString("descricao"));
+				Dispositivo dispositivo = new Dispositivo();
+				dispositivo.setId(rs.getLong("dispositivo_id"));
+				dispositivo.setLocalizacao(rs.getString("localizacao"));
+				dispositivo.setDescricao(rs.getString("descricao"));
 
 				// adicionando o objeto à lista
-				devices.add(device);
+				dispositivos.add(dispositivo);
 			}
 			rs.close();
 
 			this.stmt.close();
-			return devices;
+			return dispositivos;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void update(Device device) throws SQLException {
+	public void update(Dispositivo dispositivo) throws SQLException {
 		try {
 			this.stmt = this.con.prepareStatement(UPDATE_DEVICE);
-			this.stmt.setString(1, device.getAddress());
-			this.stmt.setString(2, device.getDescription());
-			this.stmt.setLong(3, device.getId());
+			this.stmt.setString(1, dispositivo.getLocalizacao());
+			this.stmt.setString(2, dispositivo.getDescricao());
+			this.stmt.setLong(3, dispositivo.getId());
 			this.stmt.execute();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -85,10 +83,10 @@ public class DeviceDAO {
 
 	}
 
-	public void remove(Device device) {
+	public void remove(Dispositivo dispositivo) {
 		try {
 			this.stmt = this.con.prepareStatement(REMOVE_DEVICE);
-			this.stmt.setLong(1, device.getId());
+			this.stmt.setLong(1, dispositivo.getId());
 			this.stmt.execute();
 			this.stmt.close();
 		} catch (SQLException e) {
@@ -96,25 +94,25 @@ public class DeviceDAO {
 		}
 	}
 
-	public Device getDeviceById(String id) {
-		Device device = null;
-		try {			
+	public Dispositivo getDeviceById(String id) {
+		Dispositivo dispositivo = null;
+		try {
 			this.stmt = this.con.prepareStatement(GET_DEVICE_BY_ID + id);
 			ResultSet rs = this.stmt.executeQuery();
 
 			while (rs.next()) {
 				// Criando o objeto Contato
-				device = new Device();
-				device.setId(rs.getLong("dispositivo_id"));
-				device.setAddress(rs.getString("localizacao"));
-				device.setDescription(rs.getString("descricao"));
+				dispositivo = new Dispositivo();
+				dispositivo.setId(rs.getLong("dispositivo_id"));
+				dispositivo.setLocalizacao(rs.getString("localizacao"));
+				dispositivo.setDescricao(rs.getString("descricao"));
 
 				// adicionando o objeto à lista
 			}
-			this.stmt.close();			
+			this.stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return device;
+		return dispositivo;
 	}
 }

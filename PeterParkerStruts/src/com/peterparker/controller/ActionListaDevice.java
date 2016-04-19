@@ -3,21 +3,21 @@ package com.peterparker.controller;
 import java.util.List;
 
 import com.peterparker.dao.DeviceDAO;
-import com.peterparker.models.Device;
+import com.peterparker.models.Dispositivo;
 
 public class ActionListaDevice {
-	private List<Device> devices;
-	
-	public List<Device> getDevices() {
-		return devices;
+	private List<Dispositivo> dispositivos;
+
+	public List<Dispositivo> getDispositivos() {
+		return this.dispositivos;
 	}
-	
+
 	public String execute() throws Exception {
-		
+
 		DeviceDAO dao = new DeviceDAO();
-		devices = dao.get();
-		
+		this.dispositivos = dao.get();
+
 		return "success";
 	}
-	
+
 }
