@@ -25,7 +25,7 @@ public class DeviceController {
 	@RequestMapping("/adicionaDevice")
 	public String adiciona(Device device) {
 		System.out.println("Dispositivo adicionada é: " + device.getDescricao());
-		this.dao.add(device);
+		this.dao.persist(device);
 
 		return "redirect:device";
 	}
@@ -33,7 +33,7 @@ public class DeviceController {
 	@RequestMapping("/device")
 	public ModelAndView listaDispositivos() {
 		ModelAndView mv = new ModelAndView("device/list-devices");
-		List<Device> devices = this.dao.get();
+		List<Device> devices = this.dao.findAll();
 
 		mv.addObject("devices", devices);
 

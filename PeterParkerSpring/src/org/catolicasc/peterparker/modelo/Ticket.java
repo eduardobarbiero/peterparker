@@ -2,13 +2,33 @@ package org.catolicasc.peterparker.modelo;
 
 import java.util.Calendar;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Ticket {
 
+	@Id
+	@GeneratedValue
 	private Long id;
+
+	@OneToOne
 	private Car carro;
+
+	@OneToOne
 	private Device dispositivoEntrada;
+
+	@OneToOne
 	private Device dispositivoSaida;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar horaEntrada;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar horaSaida;
 
 	public Ticket(Long id, Car car, Device entrada, Device saida, Calendar horaEntrada, Calendar horaSaida) {

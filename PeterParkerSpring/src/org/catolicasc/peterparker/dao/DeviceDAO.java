@@ -1,121 +1,68 @@
 package org.catolicasc.peterparker.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
-import org.catolicasc.peterparker.ConnectionFactory;
+import javax.persistence.EntityManager;
+
+import org.catolicasc.peterparker.JPAUtil;
 import org.catolicasc.peterparker.modelo.Device;
 
 public class DeviceDAO {
-
-	private static final String INSERT_DEVICE = "INSERT INTO DISPOSITIVO (localizacao, descricao) Values (?, ?)";
-	private static final String SELECT_DEVICE = "SELECT * FROM DISPOSITIVO";
-	private static final String REMOVE_DEVICE = "DELETE FROM  DISPOSITIVO WHERE dispositivo_id=?";
-	private static final String UPDATE_DEVICE = "UPDATE DISPOSITIVO SET localizacao=?, descricao=? where dispositivo_id=?";
-	private static final String GET_DEVICE_BY_ID = "SELECT * FROM DISPOSITIVO where dispositivo_id = ";
-
-	private Connection con = null;
-	private PreparedStatement stmt = null;
+	protected EntityManager entityManager;
 
 	public DeviceDAO() {
+		this.entityManager = new JPAUtil().getEntityManager();
+	}
+
+	public Device getById(final Long long1) {
+		return this.entityManager.find(Device.class, long1);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Device> findAll() {
+		return this.entityManager.createQuery("FROM " + Device.class.getName()).getResultList();
+	}
+
+	public void persist(Device device) {
 		try {
-			this.con = new ConnectionFactory().getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			this.entityManager.getTransaction().begin();
+			this.entityManager.persist(device);
+			this.entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			this.entityManager.getTransaction().rollback();
 		}
 	}
 
-	public void add(Device device) {
+	public void merge(Device device) {
 		try {
-			this.stmt = this.con.prepareStatement(INSERT_DEVICE);
-
-			// Seta os valores
-			this.stmt.setString(1, device.getLocalizacao());
-			this.stmt.setString(2, device.getDescricao());
-
-			// Executa
-			this.stmt.execute();
-			this.stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			this.entityManager.getTransaction().begin();
+			this.entityManager.merge(device);
+			this.entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			this.entityManager.getTransaction().rollback();
 		}
-	}
-
-	public ArrayList<Device> get() {
-		ArrayList<Device> devices = new ArrayList<Device>();
-		try {
-			this.stmt = this.con.prepareStatement(SELECT_DEVICE);
-			ResultSet rs = this.stmt.executeQuery();
-
-			while (rs.next()) {
-				// Criando o objeto Contato
-				Device device = new Device();
-				device.setId(rs.getLong("dispositivo_id"));
-				device.setLocalizacao(rs.getString("localizacao"));
-				device.setDescricao(rs.getString("descricao"));
-
-				// adicionando o objeto à lista
-				devices.add(device);
-			}
-			rs.close();
-
-			this.stmt.close();
-			return devices;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void update(Device device) throws SQLException {
-		try {
-			this.stmt = this.con.prepareStatement(UPDATE_DEVICE);
-			this.stmt.setString(1, device.getLocalizacao());
-			this.stmt.setString(2, device.getDescricao());
-			this.stmt.setLong(3, device.getId());
-			this.stmt.execute();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			this.stmt.close();
-		}
-
 	}
 
 	public void remove(Device device) {
 		try {
-			this.stmt = this.con.prepareStatement(REMOVE_DEVICE);
-			this.stmt.setLong(1, device.getId());
-			this.stmt.execute();
-			this.stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			this.entityManager.getTransaction().begin();
+			device = this.entityManager.find(Device.class, device.getId());
+			this.entityManager.remove(device);
+			this.entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			this.entityManager.getTransaction().rollback();
 		}
 	}
 
-	public Device getDeviceById(Long id) {
+	public void removeById(final long id) {
 		try {
-			Device device = null;
-			this.stmt = this.con.prepareStatement(GET_DEVICE_BY_ID + id);
-			ResultSet rs = this.stmt.executeQuery();
-
-			while (rs.next()) {
-				// Criando o objeto Contato
-				device = new Device();
-				device.setId(rs.getLong("dispositivo_id"));
-				device.setLocalizacao(rs.getString("localizacao"));
-				device.setDescricao(rs.getString("descricao"));
-
-				// adicionando o objeto à lista
-			}
-			this.stmt.close();
-
-			return device;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Device device = this.getById(id);
+			this.remove(device);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
-
 }
