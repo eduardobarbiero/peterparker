@@ -1,6 +1,5 @@
 package org.catolicasc.peterparker.controller;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,8 +30,8 @@ public class TicketController {
 	public ModelAndView formulario() {
 		ModelAndView mv = new ModelAndView("ticket/add-ticket");
 
-		List<Car> cars = this.cDao.get();
-		ArrayList<Device> devices = this.dDao.get();
+		List<Car> cars = this.cDao.findAll();
+		List<Device> devices = this.dDao.findAll();
 
 		mv.addObject("devices", devices);
 		mv.addObject("cars", cars);
@@ -49,9 +48,9 @@ public class TicketController {
 		Car car = this.cDao.getById(ticket.getCarro().getId());
 		ticket.setCarro(car);
 		ticket.setHoraEntrada(Calendar.getInstance());
-		Device device = this.dDao.getDeviceById(ticket.getDispositivoEntrada().getId());
+		Device device = this.dDao.getById(ticket.getDispositivoEntrada().getId());
 		ticket.setDispositivoEntrada(device);
-		this.tDao.add(ticket);
+		this.tDao.persist(ticket);
 
 		return "redirect:ticket";
 	}
@@ -59,12 +58,12 @@ public class TicketController {
 	@RequestMapping("/ticket")
 	public ModelAndView retornaLista() {
 		ModelAndView mv = new ModelAndView("ticket/list-tickets");
-		List<Ticket> tickets = this.tDao.getList();
-		List<Ticket> ticketsout = this.tDao.getListOut();
-		List<Device> devices = this.dDao.get();
+		List<Ticket> tickets = this.tDao.findAll();
+		// List<Ticket> ticketsout = this.tDao.getListOut();
+		List<Device> devices = this.dDao.findAll();
 
 		mv.addObject("tickets", tickets);
-		mv.addObject("ticketsout", ticketsout);
+		// mv.addObject("ticketsout", ticketsout);
 		mv.addObject("devices", devices);
 
 		return mv;
@@ -74,10 +73,10 @@ public class TicketController {
 	public String alteraTicket(Ticket ticket) {
 
 		ticket.setHoraSaida(Calendar.getInstance());
-		Device device = this.dDao.getDeviceById(ticket.getDispositivoSaida().getId());
+		Device device = this.dDao.getById(ticket.getDispositivoSaida().getId());
 		ticket.setDispositivoSaida(device);
 
-		this.tDao.update(ticket);
+		this.tDao.merge(ticket);
 		return "redirect:ticket";
 	}
 
