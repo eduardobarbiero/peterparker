@@ -22,7 +22,7 @@ public class TicketDAO {
 	@SuppressWarnings("unchecked")
 	public List<Ticket> findAll() {
 		Query query = this.entityManager
-				.createQuery("SELECT t FROM Ticket t LEFT JOIN Car c ON t.carro = c WHERE t.dispositivoSaida IS NULL");
+				.createQuery("SELECT t FROM Ticket t LEFT JOIN Car c ON t.carro.id = c.id WHERE t.dispositivoSaida.id IS NULL");
 
 		return query.getResultList();
 	}

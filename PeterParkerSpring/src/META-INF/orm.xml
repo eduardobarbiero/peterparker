@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+	<description>PeterParker mapping file</description>
+
+	<package>org.catolicasc.peterparker.modelo</package>
+
+	<entity class="Car">
+		<table name="car" />
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value strategy="AUTO" />
+			</id>
+			<basic name="cor">
+				<column name="cor" length="100" />
+			</basic>
+			<basic name="placa">
+				<column name="placa" length="100" />
+			</basic>
+		</attributes>
+	</entity>
+	
+	<entity class="Device">
+		<table name="device" />
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value strategy="AUTO" />
+			</id>
+			<basic name="descricao">
+				<column name="descricao" length="100" />
+			</basic>
+			<basic name="localizacao">
+				<column name="localizacao" length="100" />
+			</basic>
+		</attributes>
+	</entity>
+	
+	<entity class="Ticket">
+		<table name="ticket" />
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value strategy="AUTO" />
+			</id>
+			<basic name="horaEntrada">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="horaSaida">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<one-to-one name="carro"></one-to-one>
+			<one-to-one name="dispositivoEntrada"></one-to-one>
+			<one-to-one name="dispositivoSaida"></one-to-one>
+		</attributes>
+	</entity>
+</entity-mappings>

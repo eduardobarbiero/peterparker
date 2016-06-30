@@ -5,8 +5,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JPAUtil {
-
-	private static EntityManagerFactory entity = Persistence.createEntityManagerFactory("PeterParker");
+  
+	private static EntityManagerFactory entity;
+	
+	public JPAUtil() {
+		entity = Persistence.createEntityManagerFactory("PeterParker");
+	}
 
 	public EntityManager getEntityManager() {
 		return entity.createEntityManager();

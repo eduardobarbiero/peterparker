@@ -1,14 +1,6 @@
 package org.catolicasc.peterparker.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Car {
-
-	@Id
-	@GeneratedValue
 	private Long id;
 	private String placa;
 	private String cor;

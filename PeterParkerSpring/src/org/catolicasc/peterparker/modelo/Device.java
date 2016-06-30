@@ -1,14 +1,7 @@
 package org.catolicasc.peterparker.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Device {
 
-	@Id
-	@GeneratedValue
 	private Long id;
 	private String localizacao;
 	private String descricao;
